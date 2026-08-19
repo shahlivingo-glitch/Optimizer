@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DXF Nesting</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>DXF / SVG Nesting</h1>
+    <p class="subtitle">True-shape irregular nesting for laser &amp; plasma cutting &mdash; NFP + genetic algorithm, runs entirely in your browser.</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>1. Parts</h2>
+      <label class="filedrop">
+        <input id="fileInput" type="file" accept=".dxf,.svg" multiple />
+        Upload DXF / SVG files
+      </label>
+      <div id="importWarnings" class="warnings"></div>
+      <table class="parts-table">
+        <thead>
+          <tr><th>Part</th><th>Size (mm)</th><th>Qty</th><th>Rotation</th><th></th></tr>
+        </thead>
+        <tbody id="partsBody"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>2. Sheets</h2>
+      <table class="sheets-table">
+        <thead>
+          <tr><th>Width (mm)</th><th>Height (mm)</th><th>Qty</th><th></th></tr>
+        </thead>
+        <tbody id="sheetsBody"></tbody>
+      </table>
+      <button id="addSheetBtn" class="secondary">+ Add sheet type</button>
+
+      <h2>3. Cutting parameters</h2>
+      <label class="field">
+        Kerf / part spacing (mm)
+        <input id="kerfInput" type="number" min="0" step="0.1" value="1" />
+      </label>
+    </section>
+
+    <section class="panel">
+      <h2>4. Run</h2>
+      <label class="field">
+        Time budget
+        <select id="timeBudgetSelect">
+          <option value="30000">30 seconds</option>
+          <option value="60000">1 minute</option>
+          <option value="120000">2 minutes</option>
+          <option value="300000">5 minutes</option>
+          <option value="0">Run until stopped</option>
+        </select>
+      </label>
+      <div class="run-buttons">
+        <button id="startBtn" class="primary">Start nesting</button>
+        <button id="stopBtn" class="secondary" disabled>Stop &amp; use current best</button>
+      </div>
+      <div id="statusLine" class="status-line"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>5. Result</h2>
+      <div id="resultToolbar" class="result-toolbar">
+        <div id="sheetTabs" class="sheet-tabs"></div>
+        <div class="export-buttons">
+          <button id="exportDxfBtn" class="secondary" disabled>Download DXF (this sheet)</button>
+          <button id="exportSvgBtn" class="secondary" disabled>Download SVG (this sheet)</button>
+          <button id="exportAllDxfBtn" class="secondary" disabled>Download all sheets (DXF)</button>
+        </div>
+      </div>
+      <div id="statsRow" class="stats-row"></div>
+      <canvas id="previewCanvas" width="900" height="600"></canvas>
+      <div id="unplacedWarning" class="warnings"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
